@@ -1,6 +1,5 @@
 package com.quickmmo.character.web.handler;
 
-import com.quickmmo.character.model.Character;
 import com.quickmmo.character.service.CharacterService;
 import com.quickmmo.character.web.dto.CreateCharacterDto;
 import org.springframework.http.MediaType;

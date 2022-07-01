@@ -8,6 +8,7 @@ public interface CharacterService {
 
     /**
      * Get existing character
+     *
      * @param name - name of a character to get
      * @return reqiested Character
      */
@@ -15,6 +16,7 @@ public interface CharacterService {
 
     /**
      * Creates a new character
+     *
      * @param dto - dto class for character creation
      * @return void
      */
