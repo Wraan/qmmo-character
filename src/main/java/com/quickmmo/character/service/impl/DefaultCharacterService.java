@@ -1,6 +1,7 @@
 package com.quickmmo.character.service.impl;
 
 import com.quickmmo.character.cache.CacheService;
+import com.quickmmo.character.exceptions.character.NameConflictException;
 import com.quickmmo.character.model.Character;
 import com.quickmmo.character.repository.CharacterRepository;
 import com.quickmmo.character.service.CharacterService;
@@ -40,11 +41,11 @@ public class DefaultCharacterService implements CharacterService {
     @Override
     public Mono<Void> createCharacter(final CreateCharacterDto dto) {
         LOGGER.debug("Creating character with name {} - received dto={}", dto.getName(), dto);
-        // check if character exists
-        final Character newCharacter = CharacterUtils.newCharacter(dto.getName());
 
-        return characterRepository.save(newCharacter)
-                .flatMap(character -> cacheService.set(getNameToCharacterCacheKey(character.getName()), character))
+        return getCharacter(dto.getName())
+                .flatMap(character -> Mono.error(new NameConflictException(dto.getName())))
+                .switchIfEmpty(characterRepository.save(CharacterUtils.newCharacter(dto.getName()))
+                        .flatMap(character -> cacheService.set(getNameToCharacterCacheKey(character.getName()), character)))
                 .then();
     }
 
