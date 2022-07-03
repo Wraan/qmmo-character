@@ -47,7 +47,7 @@ public class CharacterHandlerTest {
      * GET /character/{name} tests
      */
     @Test
-    public void whenGettingCharacter_thenReturnCharacter() {
+    public void whenGetCharacter_thenReturnCharacter() {
         // given
         final Character expectedCharacter = CharacterUtils.newCharacter(CHARACTER_NAME);
         when(characterService.getCharacter(CHARACTER_NAME)).thenReturn(Mono.just(expectedCharacter));
@@ -67,7 +67,7 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    public void whenGettingNotExistingCharacter_thenReturnNotFound() {
+    public void whenGetCharacter_thenReturnNotFound() {
         // given
         when(characterService.getCharacter(CHARACTER_NAME)).thenReturn(Mono.empty());
         // when
@@ -84,7 +84,7 @@ public class CharacterHandlerTest {
      * POST /character tests
      */
     @Test
-    public void whenCreatingCharacter_thenReturnCreated() {
+    public void whenCreateCharacter_thenReturnCreated() {
         // given
         final CreateCharacterDto characterDto = new CreateCharacterDto(CHARACTER_NAME);
         when(characterService.createCharacter(characterDto)).thenReturn(Mono.empty());
@@ -101,7 +101,7 @@ public class CharacterHandlerTest {
     }
 
     @Test
-    public void whenCreatingDuplicatedCharacter_thenReturnConflict() {
+    public void whenCreateCharacter_thenReturnConflict() {
         // given
         final CreateCharacterDto characterDto = new CreateCharacterDto(CHARACTER_NAME);
         when(characterService.createCharacter(characterDto)).thenReturn(Mono.error(new NameConflictException(CHARACTER_NAME)));
